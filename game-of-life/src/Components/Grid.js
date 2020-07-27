@@ -5,23 +5,32 @@ function Grid() {
     let numRows = 30;
     let numCols = 30; 
 
-    // const [grid, setGrid] = useState(() => {
-    //     const rows = [];
-    //     for (let i = 0; i < numRows; i++) {
-    //         rows.push(Array.from(Array(numCols), () => Math.floor(Math.random() + 0.5)))
-    //     }
-
-    //     return rows;
-    // })
-
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {
           arr[i] = new Array(rows);
         }
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
+        // for (let i = 0; i < cols; i++) {
+        //     for (let j = 0; j < rows; j++) {
+        //       arr[i][j] = Math.floor(Math.random() + 0.5);
+        //     }
+        // }
+        return arr;
+    }
+
+    function fillWithRandom(arr) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr.length; j++) {
               arr[i][j] = Math.floor(Math.random() + 0.5);
+            }
+        }
+        return arr;
+    }
+
+    function fillWithEmpty(arr) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr.length; j++) {
+              arr[i][j] = 0;
             }
         }
         return arr;
@@ -31,6 +40,7 @@ function Grid() {
         let sum = 0;
         for (let i = -1; i < 2; i++) {
           for (let j = -1; j < 2; j++) {
+            // wrap around to the far side
             let col = (x + i + numCols) % numCols;
             let row = (y + j + numRows) % numRows;
             sum += grid[col][row];
@@ -40,7 +50,7 @@ function Grid() {
         return sum;
     }
     
-    let firstGrid = make2DArray(numCols, numRows);
+    let firstGrid = fillWithRandom(make2DArray(numCols, numRows));
 
     const [grid, setGrid] = useState(firstGrid);
     const [running, setRunning] = useState(false);
@@ -73,7 +83,6 @@ function Grid() {
 
     return(
         <>
-            <p>My Grid will be here</p>
             <button
                 onClick={() => {
                     setRunning(!running);
@@ -82,6 +91,13 @@ function Grid() {
                 }}>
                 {running ? "stop" : "start"}
             </button>
+            <button
+                onClick={() => {
+                    if (!running) {
+                        setGrid(fillWithEmpty(make2DArray(numCols, numRows)))
+                    }
+                }}
+            >clear</button>
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: `repeat(${numCols}, 15px)`
