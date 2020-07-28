@@ -1,20 +1,15 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
 
 function Grid() {
     let numRows = 30;
-    let numCols = 30; 
+    let numCols = 30;
 
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {
           arr[i] = new Array(rows);
         }
-        // for (let i = 0; i < cols; i++) {
-        //     for (let j = 0; j < rows; j++) {
-        //       arr[i][j] = Math.floor(Math.random() + 0.5);
-        //     }
-        // }
         return arr;
     }
 
@@ -54,12 +49,16 @@ function Grid() {
 
     const [grid, setGrid] = useState(firstGrid);
     const [running, setRunning] = useState(false);
+    const [generation, setGeneration] = useState(0);
     const runningRef = useRef();
     runningRef.current = running;
+
+
     const runSimulation = useCallback(() => {
         if (!runningRef.current) {
             return;
         }
+        setGeneration(generation => generation + 1);
         setGrid(g => {
             return produce(g, gridCopy => {
                 for (let i = 0; i < numRows; i++) {
@@ -78,8 +77,9 @@ function Grid() {
                 }
             })
         })
-        setTimeout(runSimulation, 200)
+        setTimeout(runSimulation, 200);
     }, [])
+    
 
     return(
         <>
@@ -94,10 +94,12 @@ function Grid() {
             <button
                 onClick={() => {
                     if (!running) {
-                        setGrid(fillWithEmpty(make2DArray(numCols, numRows)))
+                        setGrid(fillWithEmpty(make2DArray(numCols, numRows)));
+                        setGeneration(0);
                     }
                 }}
             >clear</button>
+            <p>Generation: {generation}</p>
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: `repeat(${numCols}, 15px)`
