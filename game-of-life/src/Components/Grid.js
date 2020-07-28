@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
 
 function Grid() {
-    let numRows = 30;
-    let numCols = 30;
+    const [numRows, setNumRows] = useState(10);
+    const [numCols, setNumCols] = useState(10);
 
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
@@ -51,11 +51,15 @@ function Grid() {
     const [running, setRunning] = useState(false);
     const [generation, setGeneration] = useState(0);
     const [speed, setSpeed] = useState(200);
-    
+
     const runningRef = useRef();
     runningRef.current = running;
     const speedRef = useRef(speed);
     speedRef.current = speed;
+    const numRowsRef = useRef(numRows);
+    numRowsRef.current = numRows;
+    const numColsRef = useRef(numCols);
+    numColsRef.current = numCols;
 
 
     const runSimulation = useCallback(() => {
@@ -66,8 +70,8 @@ function Grid() {
         setGeneration(generation => generation + 1);
         setGrid(g => {
             return produce(g, gridCopy => {
-                for (let i = 0; i < numRows; i++) {
-                    for (let j = 0; j < numCols; j++) {
+                for (let i = 0; i < numRowsRef.current; i++) {
+                    for (let j = 0; j < numColsRef.current; j++) {
                         let state = g[i][j];
                         let neighbors = countNeighbors(g, i, j);
 
@@ -85,9 +89,21 @@ function Grid() {
         setTimeout(runSimulation, speedRef.current);
     }, []);
     
-    function handleChange(event) {
-        console.log(parseInt(event.target.value));
+    function handleSpeedChange(event) {
         setSpeed(parseInt(event.target.value));
+    }
+
+    useEffect( () => { 
+        setGrid(fillWithRandom(make2DArray(numCols, numRows)));
+        setGeneration(0);
+    }, [numRows, numCols] );
+
+    function handleSizeChange(event) {
+        setNumRows(parseInt(event.target.value));
+        setNumCols(parseInt(event.target.value));
+        
+        console.log(numCols);
+        console.log(numRows);
     }
 
     return(
@@ -117,12 +133,19 @@ function Grid() {
                     }
                 }}
             >random</button>
-            <label for="speed">Choose a speed:</label>
-            <select name="speed" id="speed" value={speed} onChange={handleChange}>
+            <label htmlFor="speed">Choose speed:</label>
+            <select name="speed" id="speed" value={speed} onChange={handleSpeedChange}>
                 <option value = "1000">Very Slow</option>
                 <option value = "500">Slow</option>
                 <option value = "200">Normal</option>
                 <option value = "50">Fast</option>
+            </select>
+            <label htmlFor="size">Choose size:</label>
+            <select name="size" id="size" onChange={handleSizeChange}>
+                <option value = "10">10x10</option>
+                <option value = "20">20x20</option>
+                <option value = "30">30x30</option>
+                <option value = "40">40x40</option>
             </select>
             <div style={{
                 display: 'grid',
