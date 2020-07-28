@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
 
 function Grid() {
-    const [numRows, setNumRows] = useState(10);
-    const [numCols, setNumCols] = useState(10);
+    const [numRows, setNumRows] = useState(30);
+    const [numCols, setNumCols] = useState(30);
 
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
@@ -36,8 +36,8 @@ function Grid() {
         for (let i = -1; i < 2; i++) {
           for (let j = -1; j < 2; j++) {
             // wrap around to the far side
-            let col = (x + i + numCols) % numCols;
-            let row = (y + j + numRows) % numRows;
+            let col = (x + i + numColsRef.current) % numColsRef.current;
+            let row = (y + j + numRowsRef.current) % numRowsRef.current;
             sum += grid[col][row];
           }
         }
@@ -60,6 +60,8 @@ function Grid() {
     numRowsRef.current = numRows;
     const numColsRef = useRef(numCols);
     numColsRef.current = numCols;
+    const gridRef = useRef(grid);
+    gridRef.current = grid;
 
 
     const runSimulation = useCallback(() => {
@@ -101,9 +103,8 @@ function Grid() {
     function handleSizeChange(event) {
         setNumRows(parseInt(event.target.value));
         setNumCols(parseInt(event.target.value));
-        
-        console.log(numCols);
-        console.log(numRows);
+        setGrid(fillWithRandom(make2DArray(numCols, numRows)));
+        setGeneration(0);
     }
 
     return(
@@ -133,14 +134,14 @@ function Grid() {
                     }
                 }}
             >random</button>
-            <label htmlFor="speed">Choose speed:</label>
+            <label htmlFor="speed">Select speed:</label>
             <select name="speed" id="speed" value={speed} onChange={handleSpeedChange}>
                 <option value = "1000">Very Slow</option>
                 <option value = "500">Slow</option>
                 <option value = "200">Normal</option>
                 <option value = "50">Fast</option>
             </select>
-            <label htmlFor="size">Choose size:</label>
+            <label htmlFor="size">Select size:</label>
             <select name="size" id="size" onChange={handleSizeChange}>
                 <option value = "10">10x10</option>
                 <option value = "20">20x20</option>
@@ -156,7 +157,7 @@ function Grid() {
                     key={`${i}-${j}`}
                     onClick={() => {
                         if (!running) {
-                            const newGrid = produce(grid, gridCopy => {
+                            const newGrid = produce(gridRef.current, gridCopy => {
                                 gridCopy[i][j] = gridCopy[i][j] ? 0 : 1;
                             })
                             setGrid(newGrid);
