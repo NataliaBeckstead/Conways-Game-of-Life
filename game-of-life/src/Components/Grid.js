@@ -178,6 +178,7 @@ function Grid() {
     const [running, setRunning] = useState(false);
     const [generation, setGeneration] = useState(0);
     const [speed, setSpeed] = useState(200);
+    const [color, setColor] =useState("black");
 
     const runningRef = useRef();
     runningRef.current = running;
@@ -222,6 +223,7 @@ function Grid() {
         setSpeed(parseInt(event.target.value));
     }
 
+    // cleaning up closure for size change
     useEffect( () => { 
         setGrid(fillWithRandom(make2DArray(numCols, numRows)));
         setGeneration(0);
@@ -232,6 +234,10 @@ function Grid() {
         setNumCols(parseInt(event.target.value));
         setGrid(fillWithRandom(make2DArray(numCols, numRows)));
         setGeneration(0);
+    }
+    function handleColorChange(event) {
+        setColor(event.target.value);
+        console.log(color);
     }
 
     return(
@@ -301,11 +307,18 @@ function Grid() {
                 <option value = "50">Fast</option>
             </select>
             <label htmlFor="size">Select size:</label>
-            <select name="size" id="size" onChange={handleSizeChange}>
+            <select name="size" id="size" value={numCols} onChange={handleSizeChange}>
                 <option value = "10">10x10</option>
                 <option value = "20">20x20</option>
                 <option value = "30">30x30</option>
                 <option value = "40">40x40</option>
+            </select>
+            <label htmlFor="color">Select color:</label>
+            <select name="color" id="color" value={color} onChange={handleColorChange}>
+                <option value = "black">black</option>
+                <option value = "red">red</option>
+                <option value = "green">green</option>
+                <option value = "orange">orange</option>
             </select>
             <div style={{
                 display: 'grid',
@@ -325,7 +338,7 @@ function Grid() {
                     style={{ 
                         width: 15, 
                         height: 15,
-                        backgroundColor: grid[i][j] ? 'black' : 'white',
+                        backgroundColor: grid[i][j] ? color : 'white',
                         border: 'solid 1px gray'
                     }}/>
                 ))}
