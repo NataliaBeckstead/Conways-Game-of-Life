@@ -58,6 +58,7 @@ function Grid() {
         if (!runningRef.current) {
             return;
         }
+        // passing new generation as a function to clean up closure
         setGeneration(generation => generation + 1);
         setGrid(g => {
             return produce(g, gridCopy => {
@@ -99,6 +100,14 @@ function Grid() {
                     }
                 }}
             >clear</button>
+            <button
+                onClick={() => {
+                    if (!running) {
+                        setGrid(fillWithRandom(make2DArray(numCols, numRows)));
+                        setGeneration(0);
+                    }
+                }}
+            >random</button>
             <p>Generation: {generation}</p>
             <div style={{
                 display: 'grid',
