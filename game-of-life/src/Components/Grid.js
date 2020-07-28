@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 
 function Grid() {
     let numRows = 30;
     let numCols = 30;
+    let speed = 200;
 
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
@@ -78,12 +79,13 @@ function Grid() {
                 }
             })
         })
-        setTimeout(runSimulation, 200);
-    }, [])
+        setTimeout(runSimulation, speed);
+    }, []);
     
 
     return(
         <>
+            <p>Generation: {generation}</p>
             <button
                 onClick={() => {
                     setRunning(!running);
@@ -108,7 +110,6 @@ function Grid() {
                     }
                 }}
             >random</button>
-            <p>Generation: {generation}</p>
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: `repeat(${numCols}, 15px)`

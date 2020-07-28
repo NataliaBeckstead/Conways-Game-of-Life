@@ -6,7 +6,7 @@ import Description from './Components/Description'
 function App() {
   return (
     <div className="App">
-      <h2>Let's game of life begin!</h2>
+      <h2>Convey's Game Of Life</h2>
       <Grid></Grid>
       <Description></Description>
     </div>
