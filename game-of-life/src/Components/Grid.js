@@ -4,7 +4,6 @@ import produce from 'immer';
 function Grid() {
     let numRows = 30;
     let numCols = 30;
-    let speed = 200;
 
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
@@ -51,8 +50,12 @@ function Grid() {
     const [grid, setGrid] = useState(firstGrid);
     const [running, setRunning] = useState(false);
     const [generation, setGeneration] = useState(0);
+    const [speed, setSpeed] = useState(200);
+    
     const runningRef = useRef();
     runningRef.current = running;
+    const speedRef = useRef(speed);
+    speedRef.current = speed;
 
 
     const runSimulation = useCallback(() => {
@@ -79,9 +82,13 @@ function Grid() {
                 }
             })
         })
-        setTimeout(runSimulation, speed);
+        setTimeout(runSimulation, speedRef.current);
     }, []);
     
+    function handleChange(event) {
+        console.log(parseInt(event.target.value));
+        setSpeed(parseInt(event.target.value));
+    }
 
     return(
         <>
@@ -110,6 +117,13 @@ function Grid() {
                     }
                 }}
             >random</button>
+            <label for="speed">Choose a speed:</label>
+            <select name="speed" id="speed" value={speed} onChange={handleChange}>
+                <option value = "1000">Very Slow</option>
+                <option value = "500">Slow</option>
+                <option value = "200">Normal</option>
+                <option value = "50">Fast</option>
+            </select>
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: `repeat(${numCols}, 15px)`
