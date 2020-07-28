@@ -31,6 +31,133 @@ function Grid() {
         return arr;
     }
 
+    function fillWithPulsar(arr) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr.length; j++) {
+              arr[i][j] = 0;
+            }
+        }
+        let center = Math.floor(numCols/2);
+        arr[center-3][center+7] = 1;
+        arr[center+3][center+7] = 1;
+        arr[center-3][center+6] = 1;
+        arr[center+3][center+6] = 1;
+        arr[center-3][center+5] = 1;
+        arr[center+3][center+5] = 1;
+        arr[center-2][center+5] = 1;
+        arr[center+2][center+5] = 1;
+        arr[center-7][center+3] = 1;
+        arr[center+7][center+3] = 1;
+        arr[center-6][center+3] = 1;
+        arr[center+6][center+3] = 1;
+        arr[center-5][center+3] = 1;
+        arr[center+5][center+3] = 1;
+        arr[center-2][center+3] = 1;
+        arr[center+2][center+3] = 1;
+        arr[center-1][center+3] = 1;
+        arr[center+1][center+3] = 1;
+        arr[center-5][center+2] = 1;
+        arr[center+5][center+2] = 1;
+        arr[center-3][center+2] = 1;
+        arr[center+3][center+2] = 1;
+        arr[center-1][center+2] = 1;
+        arr[center+1][center+2] = 1;
+        arr[center-3][center+1] = 1;
+        arr[center+3][center+1] = 1;
+        arr[center-2][center+1] = 1;
+        arr[center+2][center+1] = 1;
+        arr[center-3][center-1] = 1;
+        arr[center+3][center-1] = 1;
+        arr[center-2][center-1] = 1;
+        arr[center+2][center-1] = 1;
+        arr[center-5][center-2] = 1;
+        arr[center+5][center-2] = 1;
+        arr[center-3][center-2] = 1;
+        arr[center+3][center-2] = 1;
+        arr[center-1][center-2] = 1;
+        arr[center+1][center-2] = 1;
+        arr[center-7][center-3] = 1;
+        arr[center+7][center-3] = 1;
+        arr[center-6][center-3] = 1;
+        arr[center+6][center-3] = 1;
+        arr[center-5][center-3] = 1;
+        arr[center+5][center-3] = 1;
+        arr[center-2][center-3] = 1;
+        arr[center+2][center-3] = 1;
+        arr[center-1][center-3] = 1;
+        arr[center+1][center-3] = 1;
+        arr[center-3][center-5] = 1;
+        arr[center+3][center-5] = 1;
+        arr[center-2][center-5] = 1;
+        arr[center+2][center-5] = 1;
+        arr[center-3][center-6] = 1;
+        arr[center+3][center-6] = 1;
+        arr[center-3][center-7] = 1;
+        arr[center+3][center-7] = 1;
+
+        return arr;
+    }
+
+    function fillWithPentadecathlon(arr) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr.length; j++) {
+              arr[i][j] = 0;
+            }
+        }
+        let center = Math.floor(numCols/2);
+        arr[center+5][center] = 1;
+        arr[center+4][center] = 1;
+        arr[center+3][center-1] = 1;
+        arr[center+3][center+1] = 1;
+        arr[center+2][center] = 1;
+        arr[center+1][center] = 1;
+        arr[center][center] = 1;
+        arr[center-1][center] = 1;
+        arr[center-2][center-1] = 1;
+        arr[center-2][center+1] = 1;
+        arr[center-3][center] = 1;
+        arr[center-4][center] = 1;
+
+        return arr;
+    }
+
+    function fillWithGlider(arr) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr.length; j++) {
+              arr[i][j] = 0;
+            }
+        }
+        let center = Math.floor(numCols/2);
+        arr[center-1][center] = 1;
+        arr[center][center+1] = 1;
+        arr[center+1][center-1] = 1;
+        arr[center+1][center] = 1;
+        arr[center+1][center+1] = 1;
+
+        return arr;
+    }
+
+    function fillWithLightweightSpaceship(arr) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr.length; j++) {
+              arr[i][j] = 0;
+            }
+        }
+        let center = Math.floor(numCols/2);
+        arr[center+1][center+1] = 1;
+        arr[center+1][center-2] = 1;
+        arr[center][center+2] = 1;
+        arr[center-1][center-2] = 1;
+        arr[center-1][center+2] = 1;
+        arr[center-2][center-1] = 1;
+        arr[center-2][center] = 1;
+        arr[center-2][center+1] = 1;
+        arr[center-2][center+2] = 1;
+
+
+        return arr;
+    }
+
     function countNeighbors(grid, x, y) {
         let sum = 0;
         for (let i = -1; i < 2; i++) {
@@ -134,6 +261,38 @@ function Grid() {
                     }
                 }}
             >random</button>
+            <button
+                onClick={() => {
+                    if (!running && numRows > 10) {
+                        setGrid(fillWithPulsar(make2DArray(numCols, numRows)));
+                        setGeneration(0);
+                    }
+                }}
+            >Pulsar (period 3)</button>
+            <button
+                onClick={() => {
+                    if (!running && numRows > 10) {
+                        setGrid(fillWithPentadecathlon(make2DArray(numCols, numRows)));
+                        setGeneration(0);
+                    }
+                }}
+            >Pentadecathlon (period 15)</button>
+            <button
+                onClick={() => {
+                    if (!running) {
+                        setGrid(fillWithGlider(make2DArray(numCols, numRows)));
+                        setGeneration(0);
+                    }
+                }}
+            >Glider</button>
+            <button
+                onClick={() => {
+                    if (!running) {
+                        setGrid(fillWithLightweightSpaceship(make2DArray(numCols, numRows)));
+                        setGeneration(0);
+                    }
+                }}
+            >Lightweight spaceship (LWSS)</button>
             <label htmlFor="speed">Select speed:</label>
             <select name="speed" id="speed" value={speed} onChange={handleSpeedChange}>
                 <option value = "1000">Very Slow</option>
@@ -167,7 +326,7 @@ function Grid() {
                         width: 15, 
                         height: 15,
                         backgroundColor: grid[i][j] ? 'black' : 'white',
-                        border: 'solid 1px black'
+                        border: 'solid 1px gray'
                     }}/>
                 ))}
             </div>
