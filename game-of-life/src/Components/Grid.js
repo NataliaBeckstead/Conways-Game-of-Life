@@ -270,7 +270,7 @@ function Grid() {
     }
 
     return(
-        <>
+        <div className="gameContainer">
             <button
                 onClick={() => {
                     setRunning(!running);
@@ -376,7 +376,7 @@ function Grid() {
                     <select name="color" id="color" value={color} onChange={handleColorChange}>
                         <option value = "black" style={{color: 'black'}}>black</option>
                         <option value = "red" style={{color: 'red'}}>red</option>
-                        <option value = "Chartreuse" style={{color: 'Chartreuse'}}>green</option>
+                        <option value = "Chartreuse" style={{color: '#1c8a23'}}>green</option>
                         <option value = "DarkBlue" style={{color: 'DarkBlue'}}>blue</option>
                         <option value = "orange" style={{color: '#b35900'}}>orange</option>
                         <option value = "DeepPink" style={{color: 'DeepPink'}}>pink</option>
@@ -388,7 +388,7 @@ function Grid() {
             </div>
 
             
-        </>
+        </div>
     )
 }
 

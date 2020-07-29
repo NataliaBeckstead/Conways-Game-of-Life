@@ -15,6 +15,21 @@ html {
   min-height: 100vh;
 }
 
+@media(min-width: 1200px) {
+  .mainConainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 5rem 0 5rem;
+  }
+  .description{
+    width: 50%;
+  }
+  .gameContainer{
+    margin-top: 3rem;
+  }
+}
+
 body {
   font-size: 2rem;
   font-family: 'Share Tech Mono', monospace;
