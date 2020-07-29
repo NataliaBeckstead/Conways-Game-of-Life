@@ -346,8 +346,12 @@ function Grid() {
             <select name="color" id="color" value={color} onChange={handleColorChange}>
                 <option value = "black" style={{color: 'black'}}>black</option>
                 <option value = "red" style={{color: 'red'}}>red</option>
-                <option value = "green" style={{color: 'green'}}>green</option>
-                <option value = "orange" style={{color: 'orange'}}>orange</option>
+                <option value = "Chartreuse" style={{color: 'Chartreuse'}}>green</option>
+                <option value = "DarkBlue" style={{color: 'DarkBlue'}}>blue</option>
+                <option value = "orange" style={{color: '#b35900'}}>orange</option>
+                <option value = "DeepPink" style={{color: 'DeepPink'}}>pink</option>
+                <option value = "Yellow" style={{color: '#999900'}}>yellow</option>
+                <option value = "Purple" style={{color: 'Purple'}}>purple</option>
             </select>
             <MainGrid>
                 {grid.map((rows, i) =>
