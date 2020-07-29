@@ -23,6 +23,7 @@ function Grid() {
         width: 7px; 
         height: 7px;
         border: solid 1px gray;
+        cursor: pointer;
         @media(min-width: 400px){
             width: 10px; 
             height: 10px;

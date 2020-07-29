@@ -23,10 +23,11 @@ html {
     padding: 0 5rem 0 5rem;
   }
   .description{
-    width: 50%;
+    width: 45%;
   }
   .gameContainer{
     margin-top: 3rem;
+    width: 50%;
   }
 }
 
@@ -40,6 +41,10 @@ button, select {
   font-family: 'Share Tech Mono', monospace;
 }
 
+select{
+  cursor: pointer;
+}
+
 button {
   border: none;
   background: #404040;
@@ -47,15 +52,17 @@ button {
   font-weight: 100;
   padding: 15px;
   margin: 1.5rem;
+  cursor: pointer;
   text-transform: uppercase;
   border-radius: 6px;
   display: inline-block;
+  border: solid 3px #404040;
 }
 
 button:hover {
   color: #404040;
   font-weight: 700;
-  padding:12px;
+  padding:15px;
   border: solid 3px #404040;
   background: none;
   box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
@@ -113,7 +120,7 @@ h2{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 0 2rem 2rem 2rem;
   border-radius: 8px;
   margin: 2rem 1rem 1rem 1rem;
