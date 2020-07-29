@@ -1,9 +1,37 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
+import styled from 'styled-components';
+
 
 function Grid() {
     const [numRows, setNumRows] = useState(30);
     const [numCols, setNumCols] = useState(30);
+
+    const MainGrid = styled.div`
+        display: grid;
+        grid-template-columns: repeat(${numCols}, 7px);
+        @media(min-width: 400px){
+            grid-template-columns: repeat(${numCols}, 10px);
+        }
+        @media(min-width: 600px){
+            grid-template-columns: repeat(${numCols}, 15px);
+        }
+
+    `
+
+    const GridCell = styled.div`
+        width: 7px; 
+        height: 7px;
+        border: solid 1px gray;
+        @media(min-width: 400px){
+            width: 10px; 
+            height: 10px;
+        }
+        @media(min-width: 600px){
+            width: 15px; 
+            height: 15px;
+        }
+    `
 
     function make2DArray(cols, rows) {
         let arr = new Array(cols);
@@ -235,6 +263,7 @@ function Grid() {
         setGrid(fillWithRandom(make2DArray(numCols, numRows)));
         setGeneration(0);
     }
+
     function handleColorChange(event) {
         setColor(event.target.value);
         console.log(color);
@@ -315,17 +344,14 @@ function Grid() {
             </select>
             <label htmlFor="color">Select color:</label>
             <select name="color" id="color" value={color} onChange={handleColorChange}>
-                <option value = "black">black</option>
-                <option value = "red">red</option>
-                <option value = "green">green</option>
-                <option value = "orange">orange</option>
+                <option value = "black" style={{color: 'black'}}>black</option>
+                <option value = "red" style={{color: 'red'}}>red</option>
+                <option value = "green" style={{color: 'green'}}>green</option>
+                <option value = "orange" style={{color: 'orange'}}>orange</option>
             </select>
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${numCols}, 15px)`
-            }}>
+            <MainGrid>
                 {grid.map((rows, i) =>
-                    rows.map((col, j) => <div 
+                    rows.map((col, j) => <GridCell 
                     key={`${i}-${j}`}
                     onClick={() => {
                         if (!running) {
@@ -335,14 +361,12 @@ function Grid() {
                             setGrid(newGrid);
                         }
                     }}
+                    className="gridCell"
                     style={{ 
-                        width: 15, 
-                        height: 15,
-                        backgroundColor: grid[i][j] ? color : 'white',
-                        border: 'solid 1px gray'
+                        backgroundColor: grid[i][j] ? color : 'white'
                     }}/>
                 ))}
-            </div>
+            </MainGrid>
         </>
     )
 }
