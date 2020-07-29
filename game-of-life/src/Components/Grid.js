@@ -295,38 +295,7 @@ function Grid() {
                     }
                 }}
             >random</button>
-            <button
-                onClick={() => {
-                    if (!running && numRows > 10) {
-                        setGrid(fillWithPulsar(make2DArray(numCols, numRows)));
-                        setGeneration(0);
-                    }
-                }}
-            >Pulsar (period 3)</button>
-            <button
-                onClick={() => {
-                    if (!running && numRows > 10) {
-                        setGrid(fillWithPentadecathlon(make2DArray(numCols, numRows)));
-                        setGeneration(0);
-                    }
-                }}
-            >Pentadecathlon (period 15)</button>
-            <button
-                onClick={() => {
-                    if (!running) {
-                        setGrid(fillWithGlider(make2DArray(numCols, numRows)));
-                        setGeneration(0);
-                    }
-                }}
-            >Glider</button>
-            <button
-                onClick={() => {
-                    if (!running) {
-                        setGrid(fillWithLightweightSpaceship(make2DArray(numCols, numRows)));
-                        setGeneration(0);
-                    }
-                }}
-            >Lightweight spaceship (LWSS)</button>
+            
 
             <div className="grid-container">
                 <MainGrid>
@@ -347,9 +316,48 @@ function Grid() {
                         }}/>
                     ))}
                 </MainGrid>
+
                 <p className="generation">Generation: {generation}</p>
+
+
+                <p className="smallHeader">Try some famous shapes:</p>
+                <div className="shapesButtons">
+                    <button
+                        onClick={() => {
+                            if (!running && numRows > 10) {
+                                setGrid(fillWithPulsar(make2DArray(numCols, numRows)));
+                                setGeneration(0);
+                            }
+                        }}
+                    >Pulsar (period 3)</button>
+                    <button
+                        onClick={() => {
+                            if (!running && numRows > 10) {
+                                setGrid(fillWithPentadecathlon(make2DArray(numCols, numRows)));
+                                setGeneration(0);
+                            }
+                        }}
+                    >Pentadecathlon (period 15)</button>
+                    <button
+                        onClick={() => {
+                            if (!running) {
+                                setGrid(fillWithGlider(make2DArray(numCols, numRows)));
+                                setGeneration(0);
+                            }
+                        }}
+                    >Glider</button>
+                    <button
+                        onClick={() => {
+                            if (!running) {
+                                setGrid(fillWithLightweightSpaceship(make2DArray(numCols, numRows)));
+                                setGeneration(0);
+                            }
+                        }}
+                    >Lightweight spaceship (LWSS)</button>
+                </div>
+
                 <div className="settings">
-                    <p className="settingsP">Settings:</p>
+                    <p className="smallHeader">Settings:</p>
                     <label htmlFor="speed">Select speed:
                     <select name="speed" id="speed" value={speed} onChange={handleSpeedChange}>
                         <option value = "1000">Very Slow</option>
@@ -378,6 +386,8 @@ function Grid() {
                     </select></label>
                 </div>
             </div>
+
+            
         </>
     )
 }
