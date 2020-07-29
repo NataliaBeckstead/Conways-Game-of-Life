@@ -271,7 +271,6 @@ function Grid() {
 
     return(
         <>
-            <p>Generation: {generation}</p>
             <button
                 onClick={() => {
                     setRunning(!running);
@@ -328,49 +327,57 @@ function Grid() {
                     }
                 }}
             >Lightweight spaceship (LWSS)</button>
-            <label htmlFor="speed">Select speed:</label>
-            <select name="speed" id="speed" value={speed} onChange={handleSpeedChange}>
-                <option value = "1000">Very Slow</option>
-                <option value = "500">Slow</option>
-                <option value = "200">Normal</option>
-                <option value = "50">Fast</option>
-            </select>
-            <label htmlFor="size">Select size:</label>
-            <select name="size" id="size" value={numCols} onChange={handleSizeChange}>
-                <option value = "10">10x10</option>
-                <option value = "20">20x20</option>
-                <option value = "30">30x30</option>
-                <option value = "40">40x40</option>
-            </select>
-            <label htmlFor="color">Select color:</label>
-            <select name="color" id="color" value={color} onChange={handleColorChange}>
-                <option value = "black" style={{color: 'black'}}>black</option>
-                <option value = "red" style={{color: 'red'}}>red</option>
-                <option value = "Chartreuse" style={{color: 'Chartreuse'}}>green</option>
-                <option value = "DarkBlue" style={{color: 'DarkBlue'}}>blue</option>
-                <option value = "orange" style={{color: '#b35900'}}>orange</option>
-                <option value = "DeepPink" style={{color: 'DeepPink'}}>pink</option>
-                <option value = "Yellow" style={{color: '#999900'}}>yellow</option>
-                <option value = "Purple" style={{color: 'Purple'}}>purple</option>
-            </select>
-            <MainGrid>
-                {grid.map((rows, i) =>
-                    rows.map((col, j) => <GridCell 
-                    key={`${i}-${j}`}
-                    onClick={() => {
-                        if (!running) {
-                            const newGrid = produce(gridRef.current, gridCopy => {
-                                gridCopy[i][j] = gridCopy[i][j] ? 0 : 1;
-                            })
-                            setGrid(newGrid);
-                        }
-                    }}
-                    className="gridCell"
-                    style={{ 
-                        backgroundColor: grid[i][j] ? color : 'white'
-                    }}/>
-                ))}
-            </MainGrid>
+
+            <div className="grid-container">
+                <MainGrid>
+                    {grid.map((rows, i) =>
+                        rows.map((col, j) => <GridCell 
+                        key={`${i}-${j}`}
+                        onClick={() => {
+                            if (!running) {
+                                const newGrid = produce(gridRef.current, gridCopy => {
+                                    gridCopy[i][j] = gridCopy[i][j] ? 0 : 1;
+                                })
+                                setGrid(newGrid);
+                            }
+                        }}
+                        className="gridCell"
+                        style={{ 
+                            backgroundColor: grid[i][j] ? color : 'white'
+                        }}/>
+                    ))}
+                </MainGrid>
+                <p className="generation">Generation: {generation}</p>
+                <div className="settings">
+                    <p className="settingsP">Settings:</p>
+                    <label htmlFor="speed">Select speed:
+                    <select name="speed" id="speed" value={speed} onChange={handleSpeedChange}>
+                        <option value = "1000">Very Slow</option>
+                        <option value = "500">Slow</option>
+                        <option value = "200">Normal</option>
+                        <option value = "50">Fast</option>
+                    </select></label>
+                    <label htmlFor="size">Select size:&nbsp;
+                    <select name="size" id="size" value={numCols} onChange={handleSizeChange}>
+                        <option value = "10">10x10</option>
+                        <option value = "20">20x20</option>
+                        <option value = "30">30x30</option>
+                        <option value = "40">40x40</option>
+                    </select></label>
+                    <label htmlFor="color">Select color:
+                    <select name="color" id="color" value={color} onChange={handleColorChange}>
+                        <option value = "black" style={{color: 'black'}}>black</option>
+                        <option value = "red" style={{color: 'red'}}>red</option>
+                        <option value = "Chartreuse" style={{color: 'Chartreuse'}}>green</option>
+                        <option value = "DarkBlue" style={{color: 'DarkBlue'}}>blue</option>
+                        <option value = "orange" style={{color: '#b35900'}}>orange</option>
+                        <option value = "DeepPink" style={{color: 'DeepPink'}}>pink</option>
+                        <option value = "Yellow" style={{color: '#999900'}}>yellow</option>
+                        <option value = "Purple" style={{color: 'Purple'}}>purple</option>
+                        <option value = "DarkRed" style={{color: 'DarkRed'}}>dark red</option>
+                    </select></label>
+                </div>
+            </div>
         </>
     )
 }
