@@ -323,12 +323,19 @@ function Grid() {
 
                 <p className="smallHeader">Try some famous shapes:</p>
                 <div className="shapesButtons">
+                    { numRows === 10 ? (
+                        <>
+                        <p style={{color: 'darkred'}}>To see Pulsar and Pentadecathlon select a bigger grid</p>
+                        <p style={{color: 'darkred'}}>You still can watch Glider and Lightweight Spaceship</p>
+                        </>
+                    ) : null }
                     <button
+                        id="pulsarButton"
                         onClick={() => {
                             if (!running && numRows > 10) {
                                 setGrid(fillWithPulsar(make2DArray(numCols, numRows)));
                                 setGeneration(0);
-                            }
+                            } 
                         }}
                     >Pulsar (period 3)</button>
                     <button
